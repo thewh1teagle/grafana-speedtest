@@ -11,3 +11,8 @@ docker compose up
 ```console
 docker compose exec grafana grafana cli plugins install frser-sqlite-datasource
 ```
+
+### Todo
+1. do real speed test
+2. nice dashboard
+3. periodic test runs
