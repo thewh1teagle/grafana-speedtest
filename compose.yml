@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_DATABASE_TYPE=sqlite3
+      - GF_DATABASE_PATH=/var/lib/grafana/grafana.db
+    volumes:
+      - shared:/var/lib/grafana
+
+  speedtest:
+    depends_on:
+      - grafana
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: speedtest
+    volumes:
+      - shared:/var/lib/grafana
+    command: /var/lib/grafana/grafana.db
+    
+volumes:
+  shared:
