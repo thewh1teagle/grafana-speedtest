@@ -2,10 +2,12 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
 
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/showwin/speedtest-go/speedtest"
 )
 
 func main() {
@@ -16,6 +18,23 @@ func main() {
 		log.Fatal(err)
 	}
 	defer db.Close()
+
+	var speedtest = speedtest.New()
+	// https://williamyaps.github.io/wlmjavascript/servercli.html
+	serverList, _ := speedtest.FetchServers()
+	targets, _ := serverList.FindServer([]int{})
+
+	for _, s := range targets {
+		// Please make sure your host can access this test server,
+		// otherwise you will get an error.
+		// It is recommended to replace a server at this time
+		// checkError(s.PingTest(nil))
+		// checkError(s.DownloadTest())
+		// checkError(s.UploadTest())
+
+		fmt.Printf("Latency: %s, Download: %f, Upload: %f\n", s.Latency, s.DLSpeed, s.ULSpeed)
+		s.Context.Reset()
+	}
 
 	sqlStmt := `
 	create table if not exists speedtest (
