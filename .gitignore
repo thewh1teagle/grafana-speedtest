@@ -1,3 +1,5 @@
 test.db
 speedtest/speedtest
 .DS_Store
+grafana/*
+!grafana/grafana.db

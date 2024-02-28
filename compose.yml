@@ -9,9 +9,13 @@ services:
     environment:
       - GF_DATABASE_TYPE=sqlite3
       - GF_DATABASE_PATH=/var/lib/grafana/grafana.db
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_INSTALL_PLUGINS=frser-sqlite-datasource
+      - ./dashboards:/var/lib/grafana/dashboards
     volumes:
-      - shared:/var/lib/grafana
-
+      - ./grafana:/var/lib/grafana
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - ./conf/defaults.ini:/usr/share/grafana/conf/defaults.ini
   speedtest:
     depends_on:
       - grafana
@@ -20,8 +24,6 @@ services:
       dockerfile: Dockerfile
     container_name: speedtest
     volumes:
-      - shared:/var/lib/grafana
+      - ./grafana:/var/lib/grafana
     command: /var/lib/grafana/grafana.db
     
-volumes:
-  shared:
