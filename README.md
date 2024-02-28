@@ -16,3 +16,5 @@ docker compose exec grafana grafana cli plugins install frser-sqlite-datasource
 1. do real speed test
 2. nice dashboard
 3. periodic test runs
+
+https://community.grafana.com/t/plugins-with-grafana-grafana-docker/2153/2
